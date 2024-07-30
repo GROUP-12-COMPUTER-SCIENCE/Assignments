@@ -1,35 +1,32 @@
 from collections import deque
 
-def bfs(graph, start):
-    visited = set()  # Set to keep track of visited nodes
-    queue = deque([start])  # Queue for BFS, initialized with the start node
-    result = []  # List to store the order of visited nodes
+def bfs(tree, start):
+    visited = set()
+    queue = deque([start])
+    result = []
 
     while queue:
-        # Dequeue a vertex from the queue
-        vertex = queue.popleft()
+        node = queue.popleft()
         
-        if vertex not in visited:
-            # If the vertex hasn't been visited yet
-            visited.add(vertex)  # Mark it as visited
-            result.append(vertex)  # Add it to the result list
+        if node not in visited:
+            visited.add(node)
+            result.append(node)
             
-            # Enqueue all adjacent vertices that haven't been visited
-            for neighbor in graph[vertex]:
+            for neighbor in tree[node]:
                 if neighbor not in visited:
                     queue.append(neighbor)
     
     return result
 
-# Example usage:
-graph = {
+tree = {
     'A': ['B', 'C'],
     'B': ['A', 'D', 'E'],
-    'C': ['A', 'F'],
+    'C': ['A', 'F' , 'G'],
     'D': ['B'],
-    'E': ['B', 'F'],
-    'F': ['C', 'E']
+    'E': ['B'],
+    'F': ['C'],
+    'G': ['C']
 }
 
 start_node = 'A'
-print(f"BFS starting from node {start_node}: {bfs(graph, start_node)}")
+print(f"BFS starting from node {start_node}: {bfs(tree, start_node)}")

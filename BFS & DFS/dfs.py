@@ -13,11 +13,12 @@ def dfs(graph, start, visited=None):
 
 graph = {
     'A': ['B', 'C'],
-    'B': ['D', 'E'],
-    'C': ['F'],
-    'D': [],
-    'E': ['F'],
-    'F': []
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F' , 'G'],
+    'D': ['B'],
+    'E': ['B'],
+    'F': ['C'],
+    'G': ['C']
 }
 
-dfs(graph=graph, start="D")
+dfs(graph=graph, start="A")
