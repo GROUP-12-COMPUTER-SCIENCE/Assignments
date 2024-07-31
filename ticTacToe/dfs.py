@@ -4,8 +4,13 @@ class TicTacToe:
         self.current_winner = None  # Track the winner!
 
     def print_board(self):
-        # This is just to get a visual representation of the board
         for row in [self.board[i * 3:(i + 1) * 3] for i in range(3)]:
+            print('| ' + ' | '.join(row) + ' |')
+
+    def print_board_nums(self):
+        # Shows the board with numbers to indicate positions
+        number_board = [[str(i) for i in range(j * 3, (j + 1) * 3)] for j in range(3)]
+        for row in number_board:
             print('| ' + ' | '.join(row) + ' |')
 
     def available_moves(self):
@@ -86,7 +91,8 @@ def find_best_move(board, letter):
 
 def play_game():
     game = TicTacToe()
-    game.print_board()
+    print("Welcome to Tic Tac Toe!")
+    game.print_board_nums()
 
     letter = 'X'  # Starting letter
     while game.empty_squares():
@@ -94,12 +100,21 @@ def play_game():
             square = find_best_move(game, letter)
             print(f"AI ({letter}) moves to square {square}")
         else:  # Human's turn
-            square = int(input(f"{letter}'s turn. Input move (0-8): "))
+            valid_move = False
+            while not valid_move:
+                try:
+                    square = int(input(f"{letter}'s turn. Input move (0-8): "))
+                    if square not in game.available_moves():
+                        raise ValueError
+                    valid_move = True
+                except ValueError:
+                    print("Invalid move. Please try again.")
 
         if game.make_move(square, letter):
+            print(f"{letter} makes a move to square {square}")
             game.print_board()
             if game.current_winner:
-                print(f"{letter} wins!")
+                print(f"Congratulations! {letter} wins!")
                 return
             letter = 'O' if letter == 'X' else 'X'  # Switch turns
 
