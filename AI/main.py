@@ -2,6 +2,7 @@
 
 from game import TicTacToe
 from engine import bfs_all_possible_states, dfs_winning_strategy
+import random
 
 def play_game():
     game = TicTacToe()
@@ -13,7 +14,12 @@ def play_game():
             break
 
         if game.current_player == 'X':
-            move = int(input("Player X, enter your move (0-8): "))
+            while True:
+                choice = input("Player X, enter your move (0-8): ")
+                if choice.isdigit():
+                    move = int(choice)
+                    break
+                print("Please enter a valid number!!")
         else:
             move = random.choice(available_moves)
             print(f"Player O (AI) chose move {move}")
